@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# this script generates a rundeck resource file from a static ansible inventory file.
+# replace {{ * }} with appropriate values
+# change file name to end with .sh
+
 RUNDECK_RESOURCE_FILE='/var/rundeck/resources.xml'
 ANSIBLE_INVENTORY_FILE={{ YOUR_ANSIBLE_INVENTORY_FILE_HERE }}
 
