@@ -1,0 +1,16 @@
+#! /bin/bash
+
+RUNDECK_RESOURCE_FILE='/var/rundeck/resources.xml'
+ANSIBLE_INVENTORY_FILE={{ YOUR_ANSIBLE_INVENTORY_FILE_HERE }}
+
+echo '<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <node name="localhost" description="Rundeck server node" tags="" hostname="localhost" osFamily="unix" osName="Linux" username="rundeck"/>' > ${RUNDECK_RESOURCE_FILE}
+
+cat ${ANSIBLE_INVENTORY_FILE} | grep {{ INSERT_SOMETHING_UNIQUE_ABOUT_YOUR_LINES_WITH_HOSTNAMES }} | awk '{ print $1 }' | sed 's/^/<node hostname="/g; s/$/" username="ubuntu" osFamily="unix" osName="Linux" tags="production" \/>/g' >> ${RUNDECK_RESOURCE_FILE}
+
+echo '</project>' >> ${RUNDECK_RESOURCE_FILE}
+
+chown rundeck:rundeck ${RUNDECK_RESOURCE_FILE}
+chmod 664 ${RUNDECK_RESOURCE_FILE}
